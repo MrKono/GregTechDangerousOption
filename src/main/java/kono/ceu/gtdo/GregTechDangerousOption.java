@@ -8,9 +8,11 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import gregtech.GTInternalTags;
+import gregtech.api.unification.ore.OrePrefix;
 
 import kono.ceu.gtdo.api.util.GTDOValues;
 import kono.ceu.gtdo.common.CommonProxy;
@@ -23,6 +25,8 @@ import kono.ceu.gtdo.common.CommonProxy;
 @Mod.EventBusSubscriber(modid = GTDOValues.modId)
 public class GregTechDangerousOption {
 
+    OrePrefix prefix;
+
     @SidedProxy(modId = GTDOValues.modId,
                 clientSide = "kono.ceu.gtdo.client.ClientProxy",
                 serverSide = "kono.ceu.gtdo.common.CommonProxy")
@@ -34,6 +38,7 @@ public class GregTechDangerousOption {
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         proxy.preInit(event);
+        proxy.setupExplosion();
     }
 
     @Mod.EventHandler
@@ -45,6 +50,9 @@ public class GregTechDangerousOption {
     public void postInit(FMLPostInitializationEvent e) {
         proxy.postInit(e);
     }
+
+    @Mod.EventHandler
+    public void serverStart(FMLServerStartingEvent event) {}
 
     @SubscribeEvent
     public static void syncConfigValues(ConfigChangedEvent.OnConfigChangedEvent event) {
