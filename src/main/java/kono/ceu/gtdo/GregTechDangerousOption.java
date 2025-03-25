@@ -38,7 +38,7 @@ public class GregTechDangerousOption {
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         proxy.preInit(event);
-        proxy.setupExplosion();
+        // proxy.setupExplosion();
     }
 
     @Mod.EventHandler

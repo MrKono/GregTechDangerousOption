@@ -3,13 +3,13 @@ package kono.ceu.gtdo.api.util;
 import java.util.HashMap;
 import java.util.Map;
 
+import gregtech.api.unification.ore.OrePrefix;
 import net.minecraft.util.ResourceLocation;
 
 import org.jetbrains.annotations.NotNull;
 
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.material.Materials;
-import gregtech.api.unification.ore.OrePrefix;
 
 import kono.ceu.gtdo.Tags;
 
@@ -26,18 +26,7 @@ public class GTDOValues {
         explodeMaterialMap.put(Materials.Potassium, 6.0F);
         explodeMaterialMap.put(Materials.Rubidium, 8.0F);
         explodeMaterialMap.put(Materials.Caesium, 10.0F);
-        explodeMaterialMap.put(Materials.Francium, 20.0F);
-    }
-
-    public static final Map<OrePrefix, Float> explodePrefixMap = new HashMap<>();
-
-    static {
-        explodePrefixMap.put(OrePrefix.block, 2.0F);
-        explodePrefixMap.put(OrePrefix.ingot, 1.0F);
-        explodePrefixMap.put(OrePrefix.dust, 1.0F);
-        explodePrefixMap.put(OrePrefix.dustSmall, 0.25F);
-        explodePrefixMap.put(OrePrefix.nugget, 0.1F);
-        explodePrefixMap.put(OrePrefix.dustTiny, 0.1F);
+        explodeMaterialMap.put(Materials.Francium, 12.0F);
     }
 
     public static @NotNull ResourceLocation gtdoId(String path) {
