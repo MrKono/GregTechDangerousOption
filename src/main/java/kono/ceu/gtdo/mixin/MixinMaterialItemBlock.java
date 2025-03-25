@@ -1,5 +1,13 @@
 package kono.ceu.gtdo.mixin;
 
+import static kono.ceu.gtdo.api.util.GTDOValues.explodeMaterialMap;
+
+import net.minecraft.entity.item.EntityItem;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
+
+import org.spongepowered.asm.mixin.Mixin;
+
 import gregtech.api.unification.OreDictUnifier;
 import gregtech.api.unification.material.MarkerMaterial;
 import gregtech.api.unification.material.Material;
@@ -7,13 +15,8 @@ import gregtech.api.unification.ore.OrePrefix;
 import gregtech.api.unification.stack.MaterialStack;
 import gregtech.common.blocks.BlockMaterialBase;
 import gregtech.common.blocks.MaterialItemBlock;
-import kono.ceu.gtdo.api.block.IMixinItemBlock;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.item.ItemBlock;
-import net.minecraft.item.ItemStack;
-import org.spongepowered.asm.mixin.Mixin;
 
-import static kono.ceu.gtdo.api.util.GTDOValues.explodeMaterialMap;
+import kono.ceu.gtdo.api.block.IMixinItemBlock;
 
 @Mixin(value = MaterialItemBlock.class, remap = false)
 public class MixinMaterialItemBlock extends ItemBlock implements IMixinItemBlock {

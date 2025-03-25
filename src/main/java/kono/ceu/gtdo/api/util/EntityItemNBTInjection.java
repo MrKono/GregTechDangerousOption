@@ -2,6 +2,9 @@ package kono.ceu.gtdo.api.util;
 
 import static kono.ceu.gtdo.api.util.GTDOValues.explodeMaterialMap;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -11,9 +14,6 @@ import gregtech.api.unification.material.MarkerMaterial;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.ore.OrePrefix;
 import gregtech.api.unification.stack.MaterialStack;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class EntityItemNBTInjection {
 

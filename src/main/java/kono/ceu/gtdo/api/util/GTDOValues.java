@@ -3,7 +3,6 @@ package kono.ceu.gtdo.api.util;
 import java.util.HashMap;
 import java.util.Map;
 
-import gregtech.api.unification.ore.OrePrefix;
 import net.minecraft.util.ResourceLocation;
 
 import org.jetbrains.annotations.NotNull;

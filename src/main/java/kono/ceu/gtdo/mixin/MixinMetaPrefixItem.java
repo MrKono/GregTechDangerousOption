@@ -56,7 +56,8 @@ public abstract class MixinMetaPrefixItem {
             Material mat = metaPrefixItem.getMaterial(itemEntity.getItem());
             if (explodePrefixMap.containsKey(this.prefix)) {
                 if (explodeMaterialMap.containsKey(mat)) {
-                    float strength = explodePrefixMap.get(this.prefix) * explodeMaterialMap.get(mat) * (1 + ((float) (count - 1) / 100));
+                    float strength = explodePrefixMap.get(this.prefix) * explodeMaterialMap.get(mat) *
+                            (1 + ((float) (count - 1) / 100));
                     if (itemEntity.isWet()) {
                         itemEntity.world.createExplosion(itemEntity, itemEntity.posX, itemEntity.posY, itemEntity.posZ,
                                 strength, true);
