@@ -1,5 +1,5 @@
-<h1 align="center">GregTechDangerousOption</h1>  
----  
+<h1 align="center">GregTechDangerousOption</h1>
+
 ## Info  
 **This mod Requires [GregTech CE: Unofficial](https://github.com/GregTechCEu/GregTech) !**  
 You can include this mod in your modpack!  
