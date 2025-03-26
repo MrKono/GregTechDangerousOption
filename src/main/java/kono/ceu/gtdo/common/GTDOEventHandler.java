@@ -9,6 +9,7 @@ import gregtech.api.unification.material.event.PostMaterialEvent;
 
 import kono.ceu.gtdo.Tags;
 import kono.ceu.gtdo.api.unification.GTDOMaterialFlags;
+import kono.ceu.gtdo.api.unification.material.properties.GTDOMaterialPropertyAddition;
 
 @Mod.EventBusSubscriber(modid = Tags.MODID)
 public class GTDOEventHandler {
@@ -18,6 +19,7 @@ public class GTDOEventHandler {
     @SubscribeEvent(priority = EventPriority.HIGH)
     public static void registerMaterialsHigh(MaterialEvent event) {
         GTDOMaterialFlags.init();
+        GTDOMaterialPropertyAddition.init();
     }
 
     @SubscribeEvent
