@@ -71,22 +71,6 @@ jobs:
       - name: Build Project
         run: ./gradlew --info build
 
-#      - name: Create GitHub Release
-#        uses: softprops/action-gh-release@v1
-#        with:
-#          github-tag: "v${{ env.FULL_VERSION }}"
-#          github-generate-changelog: true
-#          github-draft: false
-#          github-prerelease: false
-#          files: |
-#            build/libs/!(*-@(dev|sources|javadoc)).jar
-#            build/libs/*-@(sources).jar
-#            build/libs/*-@(dev).jar
-#          name: "${{ env.NAME }}-${{ env.FULL_VERSION }}.jar"
-#          changelog: "Changelog is available [here](https://github.com/${{github.repository}}/blob/master/ChangeLog.md)"
-#          version: "${{ github.event.inputs.version }}"
-#          version-type: "${{ github.event.inputs.release_type }}"
-
       - name: Publish to Curseforge and Modrinth
         uses: Kir-Antipov/mc-publish@v3.3
         with:
