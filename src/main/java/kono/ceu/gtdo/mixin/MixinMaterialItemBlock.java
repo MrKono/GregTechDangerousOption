@@ -7,6 +7,7 @@ import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 
 import gregtech.api.unification.OreDictUnifier;
 import gregtech.api.unification.material.MarkerMaterial;
@@ -17,7 +18,6 @@ import gregtech.common.blocks.BlockMaterialBase;
 import gregtech.common.blocks.MaterialItemBlock;
 
 import kono.ceu.gtdo.api.block.IMixinItemBlock;
-import org.spongepowered.asm.mixin.Unique;
 
 @Mixin(value = MaterialItemBlock.class, remap = false)
 public class MixinMaterialItemBlock extends ItemBlock implements IMixinItemBlock {
