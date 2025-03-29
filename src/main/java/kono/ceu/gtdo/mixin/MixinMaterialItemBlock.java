@@ -1,7 +1,6 @@
 package kono.ceu.gtdo.mixin;
 
-import static kono.ceu.gtdo.api.util.GTDOValues.explodeMaterialMap;
-import static kono.ceu.gtdo.api.util.GTDOValues.explodeWhenWet;
+import static kono.ceu.gtdo.api.util.GTDOValues.*;
 
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.item.ItemBlock;
@@ -18,11 +17,14 @@ import gregtech.common.blocks.BlockMaterialBase;
 import gregtech.common.blocks.MaterialItemBlock;
 
 import kono.ceu.gtdo.api.block.IMixinItemBlock;
+import org.spongepowered.asm.mixin.Unique;
 
 @Mixin(value = MaterialItemBlock.class, remap = false)
 public class MixinMaterialItemBlock extends ItemBlock implements IMixinItemBlock {
 
+    @Unique
     private final BlockMaterialBase block;
+    @Unique
     private final OrePrefix prefix;
 
     public MixinMaterialItemBlock(BlockMaterialBase block, OrePrefix prefix) {
@@ -39,23 +41,24 @@ public class MixinMaterialItemBlock extends ItemBlock implements IMixinItemBlock
         ItemStack stack = itemEntity.getItem();
         int count = itemEntity.getItem().getCount();
         OrePrefix prefix = OreDictUnifier.getPrefix(stack);
+
         if (prefix != OrePrefix.block) return false;
+
+        MaterialStack materialStack = OreDictUnifier.getMaterial(stack);
+        if (materialStack == null || materialStack.material instanceof MarkerMaterial) {
+            return false;
+        }
+        Material mat = materialStack.material;
         if (explodeWhenWet) {
-            MaterialStack materialStack = OreDictUnifier.getMaterial(stack);
-            if (materialStack != null) {
-                Material mat = materialStack.material;
-                if (mat instanceof MarkerMaterial) return false;
-                if (itemEntity.isWet()) {
-                    if (explodeMaterialMap.containsKey(mat)) {
-                        float strength = 2.0F * explodeMaterialMap.get(mat) * (1 + ((float) (count - 1) / 100));
-                        itemEntity.world.createExplosion(itemEntity, itemEntity.posX, itemEntity.posY, itemEntity.posZ,
-                                strength, true);
-                        itemEntity.setDead();
-                        return false;
-                    }
-                    return false;
-                }
+            if (!explodePrefixMap.containsKey(prefix) || !itemEntity.isWet() || !explodeMaterialMap.containsKey(mat)) {
+                return false;
             }
+
+            float strength = explodePrefixMap.get(prefix) * explodeMaterialMap.get(mat) *
+                    (1 + ((float) (count - 1) / 100));
+            itemEntity.world.createExplosion(itemEntity, itemEntity.posX, itemEntity.posY, itemEntity.posZ,
+                    strength, true);
+            itemEntity.setDead();
             return false;
         }
         return false;

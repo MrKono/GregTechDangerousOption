@@ -28,10 +28,10 @@ public class GTDOMaterialPropertyAddition {
                         material.setProperty(GTDOPropertyKey.EXPLOSION, new GTDOExplosionProperty(
                                 true, value));
                     } else {
-                        GTDOLog.logger.error(name + "was null!! Skipped!!");
+                        GTDOLog.logger.error("Material \"{}\" was null!! Skipped!!", name);
                     }
                 } catch (NumberFormatException e) {
-                    GTDOLog.logger.error("Numeric conversion was failed: " + floatValue);
+                    GTDOLog.logger.error("Numeric conversion was failed: {}", floatValue);
                 }
             }
         }
