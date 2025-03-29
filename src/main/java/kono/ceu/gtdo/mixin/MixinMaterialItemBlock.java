@@ -48,7 +48,7 @@ public class MixinMaterialItemBlock extends ItemBlock implements IMixinItemBlock
         if (materialStack == null || materialStack.material instanceof MarkerMaterial) {
             return false;
         }
-        
+
         Material mat = materialStack.material;
         if (explodeWhenWet) {
             if (!explodePrefixMap.containsKey(prefix) || !itemEntity.isWet() || !explodeMaterialMap.containsKey(mat)) {
