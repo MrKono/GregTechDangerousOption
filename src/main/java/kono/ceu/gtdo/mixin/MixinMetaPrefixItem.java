@@ -1,9 +1,6 @@
 package kono.ceu.gtdo.mixin;
 
-import static kono.ceu.gtdo.api.util.GTDOValues.explodeMaterialMap;
-
-import java.util.HashMap;
-import java.util.Map;
+import static kono.ceu.gtdo.api.util.GTDOValues.*;
 
 import net.minecraft.block.BlockCauldron;
 import net.minecraft.block.state.IBlockState;
@@ -13,7 +10,6 @@ import net.minecraft.util.math.BlockPos;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -22,27 +18,12 @@ import gregtech.api.items.materialitem.MetaPrefixItem;
 import gregtech.api.unification.material.Material;
 import gregtech.api.unification.ore.OrePrefix;
 
-import kono.ceu.gtdo.GTDOConfig;
-
 @Mixin(value = MetaPrefixItem.class, remap = false)
 public abstract class MixinMetaPrefixItem {
 
     @Final
     @Shadow
     private OrePrefix prefix;
-
-    @Unique
-    private final boolean explodeWhenWet = GTDOConfig.features.explodeWhenWet;
-    @Unique
-    private static final Map<OrePrefix, Float> explodePrefixMap = new HashMap<>();
-
-    static {
-        explodePrefixMap.put(OrePrefix.ingot, 1.0F);
-        explodePrefixMap.put(OrePrefix.dust, 1.0F);
-        explodePrefixMap.put(OrePrefix.dustSmall, 0.25F);
-        explodePrefixMap.put(OrePrefix.nugget, 0.1F);
-        explodePrefixMap.put(OrePrefix.dustTiny, 0.1F);
-    }
 
     @Inject(method = "onEntityItemUpdate",
             at = @At(value = "INVOKE",

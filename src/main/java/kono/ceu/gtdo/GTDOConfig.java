@@ -29,5 +29,11 @@ public class GTDOConfig {
         public String[] wetExplosives = new String[] {
                 "lithium:1.0", "sodium:2.0", "potassium:4.0", "rubidium:8.0", "caesium:10.0", "francium:12.0"
         };
+
+        @Config.Comment({ "OrePrefix that explodes when wet", "Define OrePrefix and power with \":\".",
+                "Explosion Power: OrePrefix's power * Material's power" })
+        public String[] wetExplosivesPrefix = new String[] {
+                "block:2.0", "ingot:1.0", "nugget:0.1", "dust:1.0", "dustSmall:0.25", "dustTiny:0.1F"
+        };
     }
 }
