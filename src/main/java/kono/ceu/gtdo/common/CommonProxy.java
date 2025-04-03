@@ -1,21 +1,31 @@
 package kono.ceu.gtdo.common;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
 
 import net.minecraft.block.Block;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraftforge.event.RegistryEvent;
+import net.minecraftforge.fluids.FluidStack;
+import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
+import net.minecraftforge.fluids.capability.IFluidHandlerItem;
+import net.minecraftforge.fluids.capability.IFluidTankProperties;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 
+import gregtech.api.util.EntityDamageUtil;
 import gregtech.loaders.recipe.RecyclingRecipes;
 
 import kono.ceu.gtdo.api.util.GTDOValues;
@@ -60,6 +70,44 @@ public class CommonProxy {
     @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void registerRecipesLowest(RegistryEvent.Register<IRecipe> event) {
         RecyclingRecipes.init();
+    }
+
+    @SubscribeEvent
+    public static void temperatureDamage(TickEvent.PlayerTickEvent event) {
+        if (!GTDOValues.temperatureDamage) return;
+        if (GTDOValues.fluidContainer.isEmpty()) return;
+        if (event.player.world.isRemote) return;
+        if (event.phase != TickEvent.Phase.END) return;
+        if (event.player.ticksExisted % 20 != 0) return;
+
+        EntityPlayer player = event.player;
+        List<ItemStack> stacks = new ArrayList<>();
+        stacks.clear();
+        if (GTDOValues.tempDamageOnlyHold) {
+            ItemStack main = player.getHeldItemMainhand();
+            stacks.add(main);
+            ItemStack off = player.getHeldItemOffhand();
+            stacks.add(off);
+        } else {
+            stacks.addAll(player.inventory.mainInventory);
+        }
+        for (ItemStack stack : stacks) {
+            if (GTDOValues.fluidContainer.contains(stack.getItem())) {
+                IFluidHandlerItem fluidHandlerItem = stack
+                        .getCapability(CapabilityFluidHandler.FLUID_HANDLER_ITEM_CAPABILITY, null);
+                if (fluidHandlerItem != null) {
+                    for (IFluidTankProperties properties : fluidHandlerItem.getTankProperties()) {
+                        FluidStack containerFluid = properties.getContents();
+                        if (containerFluid != null && containerFluid.amount > 0) {
+                            int temp = containerFluid.getFluid().getTemperature();
+                            if ((GTDOValues.heatDamage && temp > 320) || (GTDOValues.frostDamage && temp < 260)) {
+                                EntityDamageUtil.applyTemperatureDamage(player, temp, 1.0F, 2);
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     /*
